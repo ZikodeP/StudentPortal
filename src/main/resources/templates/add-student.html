@@ -1,0 +1,9 @@
+<form action="#" th:action="@{/addStudent}" th:object="${student}" method="post">
+    <label for="fullname">Fullnames</label>
+    <input type="text" th:field="*{fullname}" id="fullname" placeholder="Fullname">
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{fullname}"></span>
+    <label for="email">Email</label>
+    <input type="text" th:field="*{email}" id="email" placeholder="Email">
+    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    <input type="submit" value="Add User">
+</form>
