@@ -13,23 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class StudentController {
-
     @Autowired
     private StudentRepository studentRepository;
-
-//    @GetMapping("/addstudent")
-//    public String showSignUpForm(Student student){
-//        return "add-student";
-//    }
-//
-//    @PostMapping("/addstudent")
-//    public String addStudent(Student student, BindingResult result, Model model){
-//        if(result.hasErrors()){
-//            return "add-student";
-//        }
-//        studentRepository.save(student);
-//        return "redirect:/index";
-//    }
 
     @GetMapping("/addstudent")
     public String addstudent(Model model)

@@ -10,7 +10,6 @@
 </head>
 <body>
 <div class="container">
-<!--    <a th:href="@{/addstudent}" class="btn btn-primary">Register New Student</a>-->
     <form class="col-5" th:action="@{/saveStudent}" th:object="${student}" method="post">
         <h1 style="color:red">Student Register Form</h1>
         <div class="mb-3">

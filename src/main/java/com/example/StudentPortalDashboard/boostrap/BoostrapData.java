@@ -1,6 +1,8 @@
 package com.example.StudentPortalDashboard.boostrap;
 
+import com.example.StudentPortalDashboard.domain.Facilitator;
 import com.example.StudentPortalDashboard.domain.Student;
+import com.example.StudentPortalDashboard.repository.FacilitatorRepository;
 import com.example.StudentPortalDashboard.repository.StudentRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -8,9 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class BoostrapData implements CommandLineRunner {
     private final StudentRepository studentRepository;
+    private final FacilitatorRepository facilitatorRepository;
 
-    public BoostrapData( StudentRepository studentRepository) {
+    public BoostrapData(StudentRepository studentRepository, FacilitatorRepository facilitatorRepository) {
         this.studentRepository = studentRepository;
+        this.facilitatorRepository = facilitatorRepository;
     }
 
     @Override
@@ -37,5 +41,21 @@ public class BoostrapData implements CommandLineRunner {
         studentRepository.save(s3);
 
         System.out.println("Customers Saved: " + studentRepository.count());
+
+
+        System.out.println("Loading Facilitator Data ...");
+
+        Facilitator f1 = new Facilitator();
+        f1.setFullnames("Alvin Hansraj");
+        f1.setEmail("Alvin.Hansraj@gmail.com");
+        f1.setDateEmployed("2023/02/08");
+        f1.setIsAdmin("Yes");
+        f1.setFaculty("Accounting");
+        f1.setModules("Financial Accounting");
+
+        facilitatorRepository.save(f1);
+
+
+        System.out.println("Facilitators Saved: " + facilitatorRepository.count());
     }
 }
