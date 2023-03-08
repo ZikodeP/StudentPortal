@@ -2,6 +2,7 @@ package com.example.StudentPortalDashboard.controller;
 
 import com.example.StudentPortalDashboard.domain.Student;
 import com.example.StudentPortalDashboard.repository.StudentRepository;
+import com.example.StudentPortalDashboard.service.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,24 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class StudentController {
-
     @Autowired
-    private StudentRepository studentRepository;
-
-//    @GetMapping("/addstudent")
-//    public String showSignUpForm(Student student){
-//        return "add-student";
-//    }
-//
-//    @PostMapping("/addstudent")
-//    public String addStudent(Student student, BindingResult result, Model model){
-//        if(result.hasErrors()){
-//            return "add-student";
-//        }
-//        studentRepository.save(student);
-//        return "redirect:/index";
-//    }
-
+    private StudentService studentService;
     @GetMapping("/addstudent")
     public String addstudent(Model model)
     {
@@ -41,21 +26,20 @@ public class StudentController {
 
     @PostMapping("/saveStudent")
     public String saveStudent(@ModelAttribute("student") Student student){
-        studentRepository.save(student);
+        studentService.addStudent(student);
         return "redirect:/index";
     }
 
     @GetMapping("/index")
     public String showStudentList(Model model)
     {
-        model.addAttribute("studentsList", studentRepository.findAll());
+        model.addAttribute("studentsList", studentService.getAllStudents());
         return "index";
     }
 
     @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model){
-        Student student = studentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:"+ id));
-
+        Student student = studentService.findById(id);
         model.addAttribute("student", student);
         return "update-student";
     }
@@ -68,15 +52,16 @@ public class StudentController {
             return "update-user";
         }
 
-        studentRepository.save(student);
+        studentService.updateStudent(id, student);
         return "redirect:/index";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteStudent(@PathVariable("id") long id, Model model) {
-        Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        studentRepository.delete(student);
+        Student student = studentService.findById(id);
+        if(student != null) {
+            studentService.deleteStudent(id);
+        }
         return "redirect:/index";
     }
 }
