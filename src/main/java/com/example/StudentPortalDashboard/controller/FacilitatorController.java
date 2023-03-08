@@ -7,8 +7,10 @@ import com.example.StudentPortalDashboard.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -34,6 +36,24 @@ public class FacilitatorController {
     public String getAllFacilitators(Model model){
         model.addAttribute("facilitatorList", facilitatorRepository.findAll());
         return "getAllFacilitator";
+    }
+
+    @GetMapping("/editFacilitator/{id}")
+    public String updateFacilitatorForm(@PathVariable("id") long id, Model model){
+        Facilitator facilitator = facilitatorRepository.findById(id).get();
+        model.addAttribute("facilitator", facilitator);
+        return "update-facilitator";
+    }
+
+    @PostMapping("/updateFacilitator/{id}")
+    public String updateFacilitator(@PathVariable("id") long id, Facilitator facilitator,
+                                BindingResult result) {
+        if (result.hasErrors()) {
+            facilitator.setId(id);
+            return "update-facilitator";
+        }
+        facilitatorRepository.save(facilitator);
+        return "redirect:/getAllFacilitator";
     }
 
 }

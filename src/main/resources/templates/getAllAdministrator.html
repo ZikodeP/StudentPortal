@@ -10,30 +10,40 @@
 </head>
 <body>
 <div class="container">
-    <a th:href="@{/addstudent}" class="btn btn-primary">Register New Student</a>
+    <a th:href="@{/addadminitrator}" class="btn btn-primary">Add New Administrator</a>
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">Student Id</th>
+            <th scope="col"> Id</th>
+            <th scope="col"> Employee Number</th>
             <th scope="col">Fullnames</th>
             <th scope="col">Email</th>
-            <th scope="col">Date Enrolled</th>
+            <th scope="col">Date Of Birth</th>
+            <th scope="col">Date Created</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="student: ${studentsList}">
-            <th th:text="${student.id}" scope="row"></th>
-            <td th:text="${student.fullname}"></td>
-            <td th:text="${student.email}"></td>
-            <td th:text="${student.DateEnrolled}"></td>
-            <td><a th:href="@{/edit/{id}(id=${student.id})}" th:onclick="if (!(confirm('Are you sure you want to update this student ? '))) return false">Edit</a></td>
-            <td><a th:href="@{/delete/{id}(id=${student.id})}" th:onclick="if (!(confirm('Are you sure you want to delete this student ? '))) return false">Delete</a></td>
+        <tr th:each="administrator: ${administratorList}">
+            <th th:text="${administrator.id}" scope="row"></th>
+            <td th:text="${administrator.fullnames}"></td>
+            <td th:text="${administrator.fullnames}"></td>
+            <td th:text="${administrator.email}"></td>
+            <td th:text="${administrator.dateOfBirth}"></td>
+            <td th:text="${administrator.dateCreated}"></td>
+            <td><a th:href="@{/edit/{id}(id=${administrator.id})}">Edit</a></td>
+            <td><a th:href="@{/delete/{id}(id=${administrator.id})}">Delete</a></td>
         </tr>
         </tbody>
     </table>
 
-    <p><a href="/addstudent">Add a new student</a></p>
+    <p><a href="/addadministrator">Add a new administrator</a></p>
 </div>
 
 </body>
 </html>
+
+
+
+
+
+
